@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: "demo-TDG"
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
+    # Locale used for formatting
+    time-zone: UTC
+
+couchbase:
+  remote:
+    endpoint-url: ws://127.0.0.1:4984/db
+    continuous: false
+    replicator-type: PUSH_AND_PULL
+    reset-checkpoint: false
+    websocket:
+      timeout: 10000
+      heartbeat: 15000
+    listeners:
+      status:
+        max-size: 10000
+        max-duration: 1m
+      counter:
+        max-size: 10000
+        max-duration: 1m
+    collections:
+      typeA:
+        documentIDs-filter:
+        channels-filter:
+      typeB:
+        documentIDs-filter:
+        channels-filter:
+    authenticator:
+      username: userdb1
+      password: password
+  local:
+    database: db
+    db-path: data
+    download-path: tmpdb
+    pre-built: false
+    copy-db: false
+    flush-previous-db: true
+    auto-purge: true
+    scope:
+      name: custom
+      collections: typeA,typeB
+  log:
+    path: logs
+    level: debug
+    max-size: 100000000
+    rotation-count: 10
+    plaintext: true
+
+
