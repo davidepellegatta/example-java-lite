@@ -1,0 +1,10 @@
+[
+  {
+    "rbacName": "Raw Sink Connector User",
+    "rbacUsername": "sync-user",
+    "rbacPassword": "password",
+    "roles": [
+      "bucket_full_access[mobile]"
+    ]
+  }
+]
