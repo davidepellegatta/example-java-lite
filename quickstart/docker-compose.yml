@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
 
   couchbase:
@@ -6,12 +6,22 @@ services:
     hostname: couchbase
     container_name: couchbase
     environment:
-      - CB_SERVICES=kv
+      - CB_SERVICES=kv,n1ql,index
       - CB_CLUSTER_NAME=demo
       - CB_INDEXSTORAGE=plasma
     volumes:
       - "./db/couchbase:/opt/couchbase/var/lib/couchbase"
       - "./db/config:/startup"
+    # In the command section, $ are replaced with $$ to avoid the error 'Invalid interpolation format for "command" option'
+    command:
+      - bash
+      - -c
+      - |
+        echo 'initialization...'
+        sleep 10
+        chmod +x /startup/load.sh
+        cd /startup/
+        ./load.sh
     ports:
       - "8091-8096:8091-8096"
       - "18091-18096:18091-18096"

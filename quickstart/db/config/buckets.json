@@ -1,6 +1,6 @@
 [
   {
-    "name": "mobile",
+    "name": "demo",
     "ramQuotaMB": 100,
     "bucketType": "couchbase",
     "authType": "sasl",
