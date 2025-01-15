@@ -33,4 +33,5 @@ data/*
 logs/*
 
 quickstart/db/couchbase/*
+quickstart/sgw/data/*
 
