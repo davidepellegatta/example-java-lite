@@ -26,3 +26,11 @@ replay_pid*
 target
 .idea
 logs/*
+
+CouchbaseLiteTemp/*
+CouchbaseLiteTemp
+data/*
+logs/*
+
+quickstart/db/couchbase/*
+

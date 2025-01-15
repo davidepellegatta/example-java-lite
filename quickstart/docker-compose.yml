@@ -1,6 +1,5 @@
-version: '3'
+version: '3.9'
 services:
-
   couchbase:
     image: btburnett3/couchbase-quickinit:enterprise-7.2.3
     hostname: couchbase
