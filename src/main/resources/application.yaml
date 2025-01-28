@@ -9,7 +9,8 @@ spring:
 
 couchbase:
   remote:
-    endpoint-url: ws://127.0.0.1:4984/db
+    #endpoint-url: wss://wazhi9tyzxyljdju.apps.cloud.couchbase.com/pos_poc_endpoint_1
+    endpoint-url: wss://b4vrjjsetlmbluxp.apps.cloud.couchbase.com/pos_poc_endpoint_1
     continuous: false
     replicator-type: PUSH_AND_PULL
     reset-checkpoint: false
@@ -24,15 +25,12 @@ couchbase:
         max-size: 10000
         max-duration: 1m
     collections:
-      typeA:
-        documentIDs-filter:
-        channels-filter:
-      typeB:
+      monitorings:
         documentIDs-filter:
         channels-filter:
     authenticator:
-      username: userdb1
-      password: password
+      username: HelloKitty
+      password: HelloKitty1!
   local:
     database: db
     db-path: data
@@ -42,8 +40,8 @@ couchbase:
     flush-previous-db: true
     auto-purge: true
     scope:
-      name: custom
-      collections: typeA,typeB
+      name: wundermart
+      collections: monitorings
   log:
     path: logs
     level: debug

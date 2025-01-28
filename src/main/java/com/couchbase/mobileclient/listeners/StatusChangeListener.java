@@ -1,9 +1,7 @@
 package com.couchbase.mobileclient.listeners;
 
-import com.couchbase.lite.CouchbaseLiteException;
-import com.couchbase.lite.ReplicatorActivityLevel;
-import com.couchbase.lite.ReplicatorChange;
-import com.couchbase.lite.ReplicatorChangeListener;
+import com.couchbase.lite.*;
+import com.couchbase.mobileclient.database.DBManager;
 import com.couchbase.mobileclient.replicator.ReplicationErrorHandler;
 import com.couchbase.mobileclient.triggers.CountAndTimeTrigger.TriggerConfig;
 import com.couchbase.mobileclient.triggers.FinalStatusTrigger;
@@ -16,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.util.Objects;
 
+/**
+ * Intercepts
+ */
 @Data
 @Slf4j
 public class StatusChangeListener implements ReplicatorChangeListener {

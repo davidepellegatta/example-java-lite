@@ -1,5 +1,6 @@
 package com.couchbase.mobileclient;
 
+import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.mobileclient.database.DBManager;
 import com.couchbase.mobileclient.replicator.ReplicationManager;
 import com.couchbase.mobileclient.config.CouchbaseLiteProperties;
@@ -17,7 +18,7 @@ public class MobileCommandRunner implements CommandLineRunner {
 
     final ApplicationContext context;
     static final String STATUS = "inserted";
-    static final String COLLECTION = "demo"; //TODO read from app.properties
+    static final String COLLECTION = "monitoring"; //TODO read from app.properties
     final ConfigPrinter printer = new ConfigPrinter();
 
     final CouchbaseLiteProperties properties;
@@ -48,27 +49,32 @@ public class MobileCommandRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        welcome();
 
-      //  printCountStatus();
+        welcome();
 
         replication.getListenerManager().addStatusListenerCallback(this::onExit);
 
+        database.saveAMonitoring();
+
         replication.start();
-
-      //  replication.getLatch().await(); // TODO
-
     }
 
-    private void onExit()  {
+    private void onExit() {
+
+        try {
+            log.info("check monitorings");
+            database.listAllMonitorings().forEach(res -> log.info("---->" + res.getString(0)));
+            log.info("end check monitorings");
+
+        } catch (CouchbaseLiteException e) {
+            log.error(e.getMessage());
+        }
+
         printer.printLine();
         //TODO print replication summary here
         log.info("End synchronisation...");
         printer.printLine();
         printer.printFooter("END LOAD SYNC - Shutting down the system...");
         System.exit(0);
-
     }
-
-
 }
