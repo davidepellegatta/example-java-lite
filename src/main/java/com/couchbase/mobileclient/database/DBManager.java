@@ -34,42 +34,36 @@ public class DBManager {
         this.listenerTokens.addAll(tokens);
     }
 
-    public Long countByStatus(String status) throws CouchbaseLiteException {
-        String queryStmt = format("SELECT count(*) total FROM _ WHERE status = \"%s\"", status);
-        return database.createQuery(queryStmt).execute().allResults().get(0).getLong("total");
-    }
-
-
     /**
      * List all documents in wundermart.monitorings
      * @return
      * @throws CouchbaseLiteException
      */
     public List<Result> listAllMonitorings() throws CouchbaseLiteException {
-        String queryStmt = "SELECT aCertainProperty total FROM wundermart.monitorings";
+        String queryStmt = "SELECT posName total FROM wundermart.monitorings";
         return  database.createQuery(queryStmt).execute().allResults();
     }
 
+    public Long countMonitorings() throws CouchbaseLiteException {
+        String queryStmt = "SELECT count(*) total FROM wundermart.monitorings";
+        return  database.createQuery(queryStmt).execute().allResults().get(0).getLong("total");
+    }
 
     public void saveAMonitoring() throws CouchbaseLiteException {
 
-
         String stringTime = String.valueOf(Instant.now().getEpochSecond());
+        String uniqueId = String.format("unique-id-%s", stringTime);
+        MutableDocument mutableDoc = new MutableDocument(uniqueId);
 
-        stringTime = String.format("hello-%s", stringTime);
+        Random random = new Random();
+        int randomNumber = random.nextInt(100) + 1; // Generates a number between 1 and 100
 
-        log.info("adding monitoring: " + stringTime);
-
-        MutableDocument mutableDoc = new MutableDocument(stringTime);
-
-        mutableDoc.setString("channel","hello");
-        mutableDoc.setString("aCertainProperty",stringTime);
+        mutableDoc.setString("pos_uuid","52286ee0-45a1-4195-a91c-d72e3c0b1146");
+        //mutableDoc.setString("pos_uuid","b87a007c-0302-4e02-8186-5f1dfb01ca8c");
+        mutableDoc.setInt("metric1",randomNumber);
+        mutableDoc.setString("datetime",stringTime);
 
         database.getScope("wundermart").getCollection("monitorings").save(mutableDoc);
-    }
-
-    public long count(String collectionName) throws CouchbaseLiteException {
-        return database.getScope(properties.getScope().getName()).getCollection(collectionName).getCount();
     }
 
     public Database getDb() {

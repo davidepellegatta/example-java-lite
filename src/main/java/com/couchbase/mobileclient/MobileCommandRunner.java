@@ -39,23 +39,10 @@ public class MobileCommandRunner implements CommandLineRunner {
         printer.printLine();
     }
 
-    @SneakyThrows
-    private void printCountStatus() {
-        log.info("Documents {} Count: {}",COLLECTION, database.count(COLLECTION));
-        long count = database.countByStatus(STATUS);
-        log.info("Total \"{}\" Documents in CBlite.{}: {}",STATUS, COLLECTION,count);
-    }
-
-
     @Override
     public void run(String... args) throws Exception {
 
         welcome();
-
-        replication.getListenerManager().addStatusListenerCallback(this::onExit);
-
-        database.saveAMonitoring();
-
         replication.start();
     }
 

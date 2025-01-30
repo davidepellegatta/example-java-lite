@@ -40,7 +40,7 @@ public class StatusChangeListener implements ReplicatorChangeListener {
     }
 
     protected void defaultOnExitCallback() {
-        log.info("printing onExit()");
+
     }
 
     @SneakyThrows
